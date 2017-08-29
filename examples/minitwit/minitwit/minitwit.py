@@ -123,6 +123,15 @@ def public_timeline():
         where message.author_id = user.user_id
         order by message.pub_date desc limit ?''', [PER_PAGE]))
 
+@app.route('/tweet')
+def public_tweet():
+    """Displays the latest messages of all users."""
+    return render_template('tweet.html')
+
+@app.route('/<username>/account')
+def public_account(username):
+    """Displays the latest messages of all users."""
+    return render_template('account.html')
 
 @app.route('/<username>')
 def user_timeline(username):
@@ -188,7 +197,7 @@ def add_message():
           values (?, ?, ?)''', (session['user_id'], request.form['text'],
                                 int(time.time())))
         db.commit()
-        flash('Your message was recorded')
+        flash('ᠲᠠᠨ ᠤ ᠰᠢᠪᠨᠡᠯ ᠢ ᠳᠠᠶᠠᠭᠠᠷ ᠣᠯᠵᠤ ᠦᠵᠡᠨ ᠡ')
     return redirect(url_for('timeline'))
 
 

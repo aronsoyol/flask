@@ -1,14 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}
   {% if request.endpoint == 'public_timeline' %}
-    Public Timeline
+    ᠣᠯᠠᠨ ᠤ ᠵᠢᠷᠭᠢᠭᠡ
   {% elif request.endpoint == 'user_timeline' %}
-    {{ profile_user.username }}'s Timeline
+    {{ profile_user.username }} ᠤ᠋ ᠰᠢᠪᠨᠡᠯ
   {% else %}
-    My Timeline
+    ᠮᠢᠨᠦ ᠵᠢᠷᠭᠢᠭᠡ
   {% endif %}
 {% endblock %}
 {% block body %}
+<div data-role="header" style="overflow:hidden;" data-position="fixed">
+
+
   <h2>{{ self.title() }}</h2>
   {% if g.user %}
     {% if request.endpoint == 'user_timeline' %}
@@ -25,25 +28,46 @@
           }}">Follow user</a>.
       {% endif %}
       </div>
-    {% elif request.endpoint == 'timeline' %}
-      <div class="twitbox">
-        <h3>What's on your mind {{ g.user.username }}?</h3>
-        <form action="{{ url_for('add_message') }}" method="post">
-          <p><input type="text" name="text" size="60"><!--
-          --><input type="submit" value="Share">
-        </form>
-      </div>
     {% endif %}
   {% endif %}
-  <ul class="messages">
+  </div><!-- /header -->
+
+  <ul class="messages"  >
   {% for message in messages %}
-    <li><img src="{{ message.email|gravatar(size=48) }}"><p>
-      <strong><a href="{{ url_for('user_timeline', username=message.username)
-      }}">{{ message.username }}</a></strong>
-      {{ message.text }}
-      <small>&mdash; {{ message.pub_date|datetimeformat }}</small>
+
+<li class="messagebody">
+<!--     <a href="{{ url_for('user_timeline', username=message.username)}}">
+      <h2>{{ message.username }}</h2>
+    </a> -->
+    <img src="{{ message.email|gravatar(size=48) }}">
+    <div class="msgheader"><span class="username"><a href="{{ url_for('user_timeline', username=message.username)}}">{{ message.username }} </a></span>
+    <span class="posttime">{{ message.pub_date|datetimeformat }}</span></div>
+    <p>{{ message.text }}</p>
+    
+
+<!-- if imgs exists -->
+<!-- <div class="ui-grid-b">
+    <div class="ui-block-a"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-c"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-a"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-c"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-a"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+    <div class="ui-block-c"><div class="ui-bar ui-bar-a" style="height:60px"><img src="{{ message.email|gravatar(size=48) }}"></div></div>
+</div>--><!-- /grid-c --> 
+
+<div class="msgfooter">
+<a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-comment ui-btn-icon-notext ui-btn-inline">a</a>11
+<a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-heart ui-btn-icon-notext ui-btn-inline">a</a>1100</div>
+    </li>
+    
   {% else %}
-    <li><em>There's no message so far.</em>
+    <li><em>There's no message so far.</em></li>
   {% endfor %}
   </ul>
 {% endblock %}
+<!-- <a href="{{ url_for('user_timeline', username=message.username)}}">{{ message.username }}</a> -->
+
+<img src="{{ message.email|gravatar(size=48) }}">
